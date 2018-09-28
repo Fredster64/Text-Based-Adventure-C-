@@ -1,0 +1,13 @@
+~~~~~~~~~~~~~
+
+You are faced up against a terrifying monster, and must vanquish it to continue in your quest. 
+At your disposal, you have three options: 
+
+Attack: You fight the monster with your regular melee weapon. It loses a number of hit points equal to your attack power. 
+Bolt: You conjure a powerful fireball to throw at the enemy. The enemy loses 7 hit points. 
+Aura: You heal yourself with your magical powers. You gain (up to) 10 hit points. 
+
+Note: you will consume 1 magic point whenever you use a spell (i.e. bolt or aura). Use them wisely! 
+When the enemy has been slain, you may move past it. 
+
+~~~~~~~~~~~~~   
