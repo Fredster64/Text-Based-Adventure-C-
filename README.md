@@ -5,3 +5,5 @@ A linear text-based adventure game written in C++. It features:
 - A wide array of enemy types that each attack in different ways. 
 
 The goal of the game is to reach the treasure room of the castle before you run out of hit points. Movement through the castle is dealt with automatically, but it is the player's responsibility to deal with the hazards that the castle has to offer! 
+
+The game instructions (in particular, those for combat) are stored in Text/combat_help.txt. However, these are also accessible while playing the game, by typing 'help' whilst in combat. 
