@@ -22,7 +22,7 @@ GameManager::GameManager()
     
     // See if player wants to start game 
     if ( !chooseToStart() )
-      return 0;
+      return;
       
     // ----- Initialise data members ----- //
     
