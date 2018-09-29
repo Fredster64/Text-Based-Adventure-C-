@@ -29,7 +29,7 @@ class GameManager
     int start_hp;
     int start_att;
     int start_magic;
-    main_char player;
+    main_char* player;
 
     //game set-up
     int steps_to_end;
