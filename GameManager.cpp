@@ -101,6 +101,163 @@ bool GameManager::chooseToStart()
     return true;
 };
 
+// ----- Event Methods ----- //
+
+void enemyEvent()
+{
+    Sleep(2000);
+    cout << "You walk " << steps_before_event << " steps before..." << endl;
+    statsFinder = random(5); //default setting (for random weak enemy)
+
+    //see if we get a strong enemy - 1 in 4 chance
+    levelSelector=random(4);
+    if( levelSelector == 1 )
+    {
+        statsFinder = random(4);
+        nameFinder = 1; // toggles because we now need to find name for strong enemy
+    }
+
+    //Construct enemy and battle it
+    Sleep(1000);
+
+    // Strong enemy case
+    if( nameFinder == 1 )
+    {
+        // Get enemy data and battle it
+        foeName = strong_enemy_names[statsFinder];
+        foe = new enemy(strong_enemies[statsFinder][0],strong_enemies[statsFinder][1],strong_enemies[statsFinder][2],foeName);
+        battle(player, *foe);
+        delete foe;
+    }
+    // Weak enemy case
+    if( nameFinder == 0 )
+    {
+        // Get enemy data and battle it
+        foeName=weak_enemy_names[statsFinder];
+        foe = new enemy(weak_enemies[statsFinder][0],weak_enemies[statsFinder][1],weak_enemies[statsFinder][2],foeName);
+        battle(player,*foe);
+        delete foe;
+    }
+    return;
+};
+
+void trapEvent()
+{
+      Sleep(2000);
+    cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
+    trapSelector = random(4); //chooses trap
+    Sleep(1000);
+    
+    // Print trap intro text
+    cout << "It's a trap!" << endl << traps[trapSelector] << endl;
+    
+    eventSelector = random( trap_stats[trapSelector][1] ); //see if you escape
+    Sleep(1000);
+
+    // Trap triggered
+    if( eventSelector == 0 )
+    {
+        cout << trap_events[trapSelector][1] << " You lose " << min(trap_stats[trapSelector][0], player.hp) << " hit points." << endl;
+        player.hp -= min( trap_stats[trapSelector][0], player.hp );
+    }
+    // Trap avoided
+    else
+        // Prints trap avoid text
+        cout << trap_events[trapSelector][0] << endl;
+
+    cout << endl;
+    return;    
+};
+
+void benchEvent()
+{
+    Sleep(2000);
+    
+    // Print explanatory text
+    cout << "You walk " << steps_before_event << " steps before..." << endl;
+    Sleep(1000);
+    cout << "You reach a comfortable-looking bench." << endl;
+    cout << "However, you also see a potentially useful object on the floor ahead of you." << endl;
+    Sleep(500);
+    cout << "Will you take a seat?" << endl;
+    
+    // Get player answer
+    cin >> answer;
+    while( ( answer != "yes" ) && ( answer!="no" ) )
+    {
+        cout << "Answer 'yes' or 'no'." << endl;
+        cin >> answer;
+    }
+    
+    // Sit on the bench
+    if( answer == "yes" )
+    {
+        cout << "You take a seat and relax, recovering from previous battles." << endl;
+        cout << "However, when you set off, you notice that the object that was on the floor has disappeared." << endl;
+        cout << "You heal " << min(10,player.hp_init-player.hp) << " hit points." << endl << endl;
+        player.hp += min(10, player.hp_init - player.hp);
+    }
+    // Don't sit on the bench
+    if( answer == "no" )
+    {
+        // A whetstone is found on the floor
+        cout << "You walk away. As you do, you collect the object ahead of you. It's a whetstone!" << endl;
+        cout << "You sharpen your blade, increasing your attack power by 1." << endl << endl;
+        player.att_pow++;
+    }
+    return;
+};
+
+void potionEvent()
+{
+    Sleep(2000);
+    cout << "You walk " << steps_before_event << " steps before..." << endl;
+    Sleep(1000);
+    // Explanatory text
+    cout << "You see a strange potion on a shelf to your right." << endl;
+    cout << "Will you drink the potion?" << endl;
+    
+    cin >> answer;
+    // Make sure answer is 'yes' or 'no'
+    while( ( answer != "yes" ) && ( answer != "no" ) )
+    {
+        cout << "Answer 'yes' or 'no'." << endl;
+        cin >> answer;
+    }
+    Sleep(500);
+    
+    // Drink the potion
+    if( answer == "yes" )
+    {
+        // Randomly decide which potion will be drunk
+        int potion_choice=random(2);
+
+        // Bitter potion
+        if( potion_choice == 0 )
+        {
+            cout << "The potion tastes bitter. It seems to be draining your very life force." << endl;
+            cout << "You lose " << min(6, player.hp) << " hit points." << endl << endl;
+            player.hp -= min(6, player.hp);
+        }
+        // Sweet potion
+        else
+        {
+            cout << "The potion tastes sweet. You feel raw magical power surging through your veins." << endl;
+            cout << "You gain 2 magic points." << endl << endl;
+            player.magic += 2;
+        }
+    }
+
+    // Potion not drunk
+    else
+        cout << "You leave the potion behind."<< endl << endl;
+            
+    return;
+};
+
+// ----- End of Event Methods ----- //
+
+
 // The game loop itself 
 // Uses r to determine randomly what events occur at a given step
 void gameLoop()
@@ -116,155 +273,35 @@ void gameLoop()
         // Gets event based on value of r
         switch(r)
         {
+            // enemy event
+            case 0:
+                enemyEvent();
+                break;
 
-        // enemy event
-        case 0:
-            Sleep(2000);
-            cout << "You walk " << steps_before_event << " steps before..." << endl;
-            statsFinder = random(5); //default setting (for random weak enemy)
+            //trap event
+            case 5:
+                trapEvent();
+                break;
 
-            //see if we get a strong enemy - 1 in 4 chance
-            levelSelector=random(4);
-            if( levelSelector == 1 )
-            {
-                statsFinder = random(4);
-                nameFinder = 1; // toggles because we now need to find name for strong enemy
-            }
+            //sit on a bench
+            case 6:
+                benchEvent();
+                break;
 
-            //Construct enemy and battle it
-            Sleep(1000);
+            //potion event
+            case 7:
+                potionEvent();
+                break;
 
-            // Strong enemy case
-            if( nameFinder == 1 )
-            {
-                // Get enemy data and battle it
-                foeName = strong_enemy_names[statsFinder];
-                foe = new enemy(strong_enemies[statsFinder][0],strong_enemies[statsFinder][1],strong_enemies[statsFinder][2],foeName);
-                battle(player, *foe);
-                delete foe;
-            }
-            // Weak enemy case
-            if( nameFinder == 0 )
-            {
-                // Get enemy data and battle it
-                foeName=weak_enemy_names[statsFinder];
-                foe = new enemy(weak_enemies[statsFinder][0],weak_enemies[statsFinder][1],weak_enemies[statsFinder][2],foeName);
-                battle(player,*foe);
-                delete foe;
-            }
-
-            break;
-
-        //trap event
-        case 5:
-            Sleep(2000);
-            cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
-            trapSelector = random(4); //chooses trap
-            Sleep(1000);
-            // Print trap intro text
-            cout << "It's a trap!" << endl << traps[trapSelector] << endl;
-            eventSelector = random( trap_stats[trapSelector][1] ); //see if you escape
-            Sleep(1000);
-
-            // Trap triggered
-            if( eventSelector == 0 )
-            {
-                cout << trap_events[trapSelector][1] << " You lose " << min(trap_stats[trapSelector][0], player.hp) << " hit points." << endl;
-                player.hp -= min( trap_stats[trapSelector][0], player.hp );
-            }
-            // Trap avoided
-            else
-                // Prints trap avoid text
-                cout << trap_events[trapSelector][0] << endl;
-
-            cout << endl;
-            break;
-
-        //sit on a bench
-        case 6:
-            Sleep(2000);
-            cout << "You walk " << steps_before_event << " steps before..." << endl;
-            Sleep(1000);
-            cout << "You reach a comfortable-looking bench." << endl;
-            cout << "However, you also see a potentially useful object on the floor ahead of you." << endl;
-            Sleep(500);
-            cout << "Will you take a seat?" << endl;
-            cin >> answer;
-            while( ( answer != "yes" ) && ( answer!="no" ) )
-            {
-                cout << "Answer 'yes' or 'no'." << endl;
-                cin >> answer;
-            }
-            // Sit on the bench
-            if( answer == "yes" )
-            {
-                cout << "You take a seat and relax, recovering from previous battles." << endl;
-                cout << "However, when you set off, you notice that the object that was on the floor has disappeared." << endl;
-                cout << "You heal " << min(10,player.hp_init-player.hp) << " hit points." << endl << endl;
-                player.hp += min(10, player.hp_init - player.hp);
-            }
-            // Don't sit on the bench
-            if( answer == "no" )
-            {
-                // A whetstone is found on the floor
-                cout << "You walk away. As you do, you collect the object ahead of you. It's a whetstone!" << endl;
-                cout << "You sharpen your blade, increasing your attack power by 1." << endl << endl;
-                player.att_pow++;
-            }
-
-            break;
-
-        //potion event
-        case 7:
-            Sleep(2000);
-            cout << "You walk " << steps_before_event << " steps before..." << endl;
-            Sleep(1000);
-            cout << "You see a strange potion on a shelf to your right." << endl;
-            cout << "Will you drink the potion?" << endl;
-            cin >> answer;
-            // Make sure answer is 'yes' or 'no'
-            while( ( answer != "yes" ) && ( answer != "no" ) )
-            {
-                cout << "Answer 'yes' or 'no'." << endl;
-                cin >> answer;
-            }
-            Sleep(500);
-            // Drink the potion
-            if( answer == "yes" )
-            {
-                // Randomly decide which potion will be drunk
-                int potion_choice=random(2);
+            //just walk forward (no event)
+            default:
+                // Update relevant variables
+                event_bit = 0;
+                steps_to_end--;
+                steps_before_event++;
+                break;
                 
-                // Bitter potion
-                if( potion_choice == 0 )
-                {
-                    cout << "The potion tastes bitter. It seems to be draining your very life force." << endl;
-                    cout << "You lose " << min(6, player.hp) << " hit points." << endl << endl;
-                    player.hp -= min(6, player.hp);
-                }
-                // Sweet potion
-                else
-                {
-                    cout << "The potion tastes sweet. You feel raw magical power surging through your veins." << endl;
-                    cout << "You gain 2 magic points." << endl << endl;
-                    player.magic += 2;
-                }
-            }
-
-            // Potion not drunk
-            else
-                cout << "You leave the potion behind."<< endl << endl;
-
-            break;
-
-        //just walk forward (no event)
-        default:
-            // Update relevant variables
-            event_bit = 0;
-            steps_to_end--;
-            steps_before_event++;
-            break;
-        } // End of switch
+            } // End of switch
         
         // Check if game will continue (after an event has occurred)
         if( ( event_bit == 1 ) && ( player.hp > 0 ) )
