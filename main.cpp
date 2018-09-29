@@ -5,6 +5,6 @@
 
 int main()
 {
-    GameManager game(); 
+    GameManager *game = new GameManager(); 
     return 0;
 }
