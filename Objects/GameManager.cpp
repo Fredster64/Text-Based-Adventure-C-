@@ -3,8 +3,8 @@
 #include "GameManager.h"
 #include "variables.h"
 #include "includes.h"
-#include "main_char.h"
-#include "enemy.h"
+#include "Objects/main_char.h"
+#include "Objects/enemy.h"
 
 #include <iostream> // Input and output text
 #include <fstream> //for reading text files
