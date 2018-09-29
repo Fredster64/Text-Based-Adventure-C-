@@ -16,6 +16,12 @@ class GameManager
     // Main game loop 
     void gameLoop();
     
+    // Event methods 
+    void enemyEvent(); 
+    void trapEvent(); 
+    void benchEvent();
+    void potionEvent(); 
+    
     // ----- Data members ------ //
     
     // Main character
