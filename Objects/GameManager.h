@@ -37,12 +37,7 @@ class GameManager
     
      // trap-related variables
     int trapSelector; //determines which trap you find
-    int eventSelector; //determines whether you escape or not
-
-    
-
-
-    
+    int eventSelector; //determines whether you escape or not   
 };
 
 #endif
