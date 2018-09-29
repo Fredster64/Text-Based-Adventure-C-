@@ -2,6 +2,9 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
+#include "main_char.h"
+#include "enemy.h"
+
 class GameManager
 {
     // ----- Methods ----- //
