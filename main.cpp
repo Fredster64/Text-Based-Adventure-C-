@@ -11,11 +11,14 @@
 
 using namespace std;
 
-// the main part of the program. Here, we dictate random encounters as well as playing the intro and outro text.
-int main()
+// ----- Game Methods ----- // 
+// Will move these to a different location (perhaps in a Game Engine)
+
+// Returns true if player agrees to start game
+//  and false otherwise 
+bool chooseToStart() 
 {
-    srand( (unsigned) time(0) ); //set random seed
-    //reading introduction
+    //reading introduction text
     string line;
     ifstream intro("Text/intro.txt");
     while(getline(intro, line))
@@ -25,6 +28,7 @@ int main()
 
     Sleep(2000);
     cout << "Will you?" << endl;
+    
     // Get user input in play_bit
     string play_bit;
     while( (play_bit != "yes" ) && ( play_bit != "no" ) )
@@ -33,14 +37,29 @@ int main()
         if( (play_bit != "yes" ) && ( play_bit != "no" ) )
             cout << "Answer 'yes' or 'no'." << endl;
     }
+    
     //Saying no to 'will you?'
-    if(play_bit=="no")
+    if( play_bit == "no" )
     {
         cout << "Never mind then.";
         Sleep(500);
-        return 0; // end the game
+        return false; // end the game
     }
-    // Player has now agreed to start the game
+    
+    // play_bit = 'yes'
+    return true;
+}
+
+// ----- End of Game Methods ----- //
+
+// the main part of the program. Here, we dictate random encounters as well as playing the intro and outro text.
+int main()
+{
+    srand( (unsigned) time(0) ); //set random seed
+    
+    //  See if player wants to start the game
+    if( !chooseToStart() )
+        return 0;
 
     //Create character
     int start_hp = 30;
@@ -64,7 +83,6 @@ int main()
     enemy *foe = new enemy(1,1,1,"");
     delete foe;
 
-    int enemy_count = 0; //number of enemies killed (unused as of yet)
     int event_bit = 1; //1 if an event occurs; 0 if it does not
 
     // Enemy-related variables
@@ -86,7 +104,7 @@ int main()
         answer = "";
         event_bit = 1; //assumes something happens, unless we go to default case
         r = random(21); //determines what event happens
-        if( (r <= 4) )
+        if( r <= 4 )
             r=0; //so 'case 0' below is actually 'case <= 4'
 
         // Gets event based on value of r
@@ -128,7 +146,6 @@ int main()
                 delete foe;
             }
 
-            enemy_count++;
             break;
 
         //trap event
