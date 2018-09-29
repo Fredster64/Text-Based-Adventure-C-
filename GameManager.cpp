@@ -15,7 +15,7 @@ using namespace std;
 
 // Constructor will set up game 
 //  and enter game loop
-GameEngine::GameEngine() 
+GameManager::GameManager() 
 {
     // Set random seed 
     srand( (unsigned) time(0) ); 
@@ -103,7 +103,7 @@ bool GameManager::chooseToStart()
 
 // ----- Event Methods ----- //
 
-void enemyEvent()
+void GameManager::enemyEvent()
 {
     Sleep(2000);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
@@ -141,7 +141,7 @@ void enemyEvent()
     return;
 };
 
-void trapEvent()
+void GameManager::trapEvent()
 {
       Sleep(2000);
     cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
@@ -169,7 +169,7 @@ void trapEvent()
     return;    
 };
 
-void benchEvent()
+void GameManager::benchEvent()
 {
     Sleep(2000);
     
@@ -208,7 +208,7 @@ void benchEvent()
     return;
 };
 
-void potionEvent()
+void GameManager::potionEvent()
 {
     Sleep(2000);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
@@ -260,7 +260,7 @@ void potionEvent()
 
 // The game loop itself 
 // Uses r to determine randomly what events occur at a given step
-void gameLoop()
+void GameManager::gameLoop()
 {
     while( ( steps_to_end > 0 ) && ( dead_check(player) == 0 ) )
     {
