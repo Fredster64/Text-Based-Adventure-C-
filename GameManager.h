@@ -10,7 +10,8 @@ class GameManager
     // ----- Methods ----- //
     
     // Constructor will execute setup and also the main game loop
-    GameManager();
+    public:
+        GameManager();
     // Player decides whether or not to start the game
     bool chooseToStart();
     // Main game loop 
