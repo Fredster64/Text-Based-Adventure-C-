@@ -30,7 +30,7 @@ GameManager::GameManager()
     start_hp = 30;
     start_att = 5;
     start_magic = 5;
-    player = main_char(start_hp, start_att, start_magic, "");
+    player = new main_char(start_hp, start_att, start_magic, "");
 
     // Game variables
     steps_to_end = 30;
@@ -110,7 +110,7 @@ void GameManager::enemyEvent()
     statsFinder = random(5); //default setting (for random weak enemy)
 
     //see if we get a strong enemy - 1 in 4 chance
-    levelSelector=random(4);
+    levelSelector = random(4);
     if( levelSelector == 1 )
     {
         statsFinder = random(4);
@@ -125,8 +125,8 @@ void GameManager::enemyEvent()
     {
         // Get enemy data and battle it
         foeName = strong_enemy_names[statsFinder];
-        foe = new enemy(strong_enemies[statsFinder][0],strong_enemies[statsFinder][1],strong_enemies[statsFinder][2],foeName);
-        battle(player, *foe);
+        foe = new enemy(strong_enemies[statsFinder][0], strong_enemies[statsFinder][1], strong_enemies[statsFinder][2], foeName);
+        battle(*player, *foe);
         delete foe;
     }
     // Weak enemy case
@@ -134,8 +134,8 @@ void GameManager::enemyEvent()
     {
         // Get enemy data and battle it
         foeName=weak_enemy_names[statsFinder];
-        foe = new enemy(weak_enemies[statsFinder][0],weak_enemies[statsFinder][1],weak_enemies[statsFinder][2],foeName);
-        battle(player,*foe);
+        foe = new enemy(weak_enemies[statsFinder][0], weak_enemies[statsFinder][1] ,weak_enemies[statsFinder][2], foeName);
+        battle(*player, *foe);
         delete foe;
     }
     return;
@@ -143,7 +143,7 @@ void GameManager::enemyEvent()
 
 void GameManager::trapEvent()
 {
-      Sleep(2000);
+    Sleep(2000);
     cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
     trapSelector = random(4); //chooses trap
     Sleep(1000);
@@ -157,8 +157,8 @@ void GameManager::trapEvent()
     // Trap triggered
     if( eventSelector == 0 )
     {
-        cout << trap_events[trapSelector][1] << " You lose " << min(trap_stats[trapSelector][0], player.hp) << " hit points." << endl;
-        player.hp -= min( trap_stats[trapSelector][0], player.hp );
+        cout << trap_events[trapSelector][1] << " You lose " << min(trap_stats[trapSelector][0], player->hp) << " hit points." << endl;
+        player->hp -= min( trap_stats[trapSelector][0], player->hp );
     }
     // Trap avoided
     else
@@ -194,8 +194,8 @@ void GameManager::benchEvent()
     {
         cout << "You take a seat and relax, recovering from previous battles." << endl;
         cout << "However, when you set off, you notice that the object that was on the floor has disappeared." << endl;
-        cout << "You heal " << min(10,player.hp_init-player.hp) << " hit points." << endl << endl;
-        player.hp += min(10, player.hp_init - player.hp);
+        cout << "You heal " << min(10, player->hp_init - player->hp) << " hit points." << endl << endl;
+        player->hp += min(10, player->hp_init - player->hp);
     }
     // Don't sit on the bench
     if( answer == "no" )
@@ -203,7 +203,7 @@ void GameManager::benchEvent()
         // A whetstone is found on the floor
         cout << "You walk away. As you do, you collect the object ahead of you. It's a whetstone!" << endl;
         cout << "You sharpen your blade, increasing your attack power by 1." << endl << endl;
-        player.att_pow++;
+        player->att_pow++;
     }
     return;
 };
@@ -236,15 +236,15 @@ void GameManager::potionEvent()
         if( potion_choice == 0 )
         {
             cout << "The potion tastes bitter. It seems to be draining your very life force." << endl;
-            cout << "You lose " << min(6, player.hp) << " hit points." << endl << endl;
-            player.hp -= min(6, player.hp);
+            cout << "You lose " << min(6, player->hp) << " hit points." << endl << endl;
+            player->hp -= min(6, player->hp);
         }
         // Sweet potion
         else
         {
             cout << "The potion tastes sweet. You feel raw magical power surging through your veins." << endl;
             cout << "You gain 2 magic points." << endl << endl;
-            player.magic += 2;
+            player->magic += 2;
         }
     }
 
@@ -262,7 +262,7 @@ void GameManager::potionEvent()
 // Uses r to determine randomly what events occur at a given step
 void GameManager::gameLoop()
 {
-    while( ( steps_to_end > 0 ) && ( dead_check(player) == 0 ) )
+    while( ( steps_to_end > 0 ) && ( dead_check(*player) == 0 ) )
     {
         answer = "";
         event_bit = 1; //assumes something happens, unless we go to default case
@@ -304,7 +304,7 @@ void GameManager::gameLoop()
             } // End of switch
         
         // Check if game will continue (after an event has occurred)
-        if( ( event_bit == 1 ) && ( player.hp > 0 ) )
+        if( ( event_bit == 1 ) && ( player->hp > 0 ) )
         {
             Sleep(1000);
             cout << "You must travel a further " << steps_to_end << " steps before you reach the treasure." << endl << endl;
@@ -314,7 +314,7 @@ void GameManager::gameLoop()
     } // end of while loop
     
     // Test if player has won the game
-    if( ( steps_to_end <= 0 ) && ( player.hp > 0 ) ) 
+    if( ( steps_to_end <= 0 ) && ( player->hp > 0 ) ) 
     {
         Sleep(2000);
         cout << "You walk " << steps_before_event << " steps before..." << endl;
@@ -324,7 +324,7 @@ void GameManager::gameLoop()
         Sleep(1000);
         cout << "Claiming the treasure as your own, you fill your bag and rush out of the castle." << endl;
         Sleep(500);
-        cout << "Congratulations, " << player.name << ", you have completed the quest and obtained the treasure!" << endl;
+        cout << "Congratulations, " << player->name << ", you have completed the quest and obtained the treasure!" << endl;
     }
     return;
 };
