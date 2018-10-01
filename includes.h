@@ -1,6 +1,6 @@
 #include <string>
-#include "Objects/main_char.h"
-#include "Objects/enemy.h"
+#include "Objects/MainChar.h"
+#include "Objects/Enemy.h"
 
 // Declaring non-member functions
 
@@ -12,10 +12,10 @@ template <class T>
 int dead_check(T& thing);
 // Override for main_char
 template <>
-int dead_check<>(main_char& player);
+int dead_check<>(MainChar& player);
 
 // Get probability of a spell being cast
-int spellProb(enemy foe);
+int spellProb(Enemy foe);
 
 // Battle sequence between player and foe
-void battle(main_char& player, enemy& foe);
+void battle(MainChar& player, Enemy& foe);
