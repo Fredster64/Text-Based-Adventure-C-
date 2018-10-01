@@ -1,12 +1,12 @@
-#include "enemy.h"
+#include "Enemy.h"
 #include <cstdlib>
 #include <iostream>
 using namespace std;
 
 // Enemy constructor will initialise relevant data members
 //  and tell the player that the enemy blocks their way
-enemy::enemy( int hit_points, int att_power, int magic_energy, string (type) )
-    :character(hit_points, att_power, magic_energy, type)
+Enemy::Enemy( int hit_points, int att_power, int magic_energy, string (type) )
+    :Character(hit_points, att_power, magic_energy, type)
 {
     if( name != "" )
     {
@@ -15,7 +15,7 @@ enemy::enemy( int hit_points, int att_power, int magic_energy, string (type) )
 }
 
 // Attack function
-void enemy::attack(character& player)
+void Enemy::attack(Character& player)
 {
     cout << "The " << name << " attacks!" << endl;
     cout << "You lose " << min(att_pow, player.hp) << " hit points." << endl << endl;
@@ -23,7 +23,7 @@ void enemy::attack(character& player)
 }
 
 // Gets enemy spell and casts it
-int enemy::spell(character& player)
+int Enemy::spell(Character& player)
 {
     int spellPicker = 0;
     // No magic points left
@@ -109,4 +109,4 @@ int enemy::spell(character& player)
     // If no spell was cast
     return 1;
 }
-enemy::~enemy() {}
+Enemy::~Enemy() {}
