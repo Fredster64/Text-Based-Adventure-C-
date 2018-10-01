@@ -1,12 +1,11 @@
 #include <string>
 #ifndef CHARACTER_H
 #define CHARACTER_H
-using namespace std;
 
-class character
+class Character
 {
 public:
-    character(int hit_points,int att_power,int magic_energy,std::string type);
+    Character(int hit_points, int att_power, int magic_energy, std::string type);
 
     int hp;
     int att_pow;
