@@ -1,11 +1,11 @@
-#include "main_char.h"
+#include "MainChar.h"
 #include <iostream>
 #include <cstdlib> //for rand()
 #include <windows.h> //for Sleep()
 using namespace std;
 
-main_char::main_char(int hit_points, int att_power, int magic_energy, string type)
-    :character(hit_points,att_power,magic_energy,type)
+MainChar::MainChar(int hit_points, int att_power, int magic_energy, string type)
+    :Character(hit_points,att_power,magic_energy,type)
 {
     hp_init = hp;
     // Get player name
@@ -14,7 +14,7 @@ main_char::main_char(int hit_points, int att_power, int magic_energy, string typ
     cout << "Greetings, " << name << "." << endl << endl;
 }
 
-void main_char::bolt_spell(character& foe)
+void MainChar::bolt_spell(Character& foe)
 {
     // Test if spell can be cast
     if(magic != 0)
@@ -41,7 +41,7 @@ void main_char::bolt_spell(character& foe)
     cout << endl;
 };
 
-void main_char::aura_spell()
+void MainChar::aura_spell()
 {
     // Successful cast
     if(magic != 0)
@@ -59,7 +59,7 @@ void main_char::aura_spell()
     cout << endl;
 };
 
-void main_char::attack(character& foe)
+void MainChar::attack(Character& foe)
 {
     int crit_bit = rand()%4; // determines whether critical hit happens
     int damage = att_pow;
@@ -85,4 +85,4 @@ void main_char::attack(character& foe)
     cout << endl;
 }
 
-main_char::~main_char() {}
+MainChar::~MainChar() {}
