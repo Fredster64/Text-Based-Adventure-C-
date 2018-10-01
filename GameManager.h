@@ -2,8 +2,8 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "Objects/main_char.h"
-#include "Objects/enemy.h"
+#include "Objects/MainChar.h"
+#include "Objects/Enemy.h"
 
 class GameManager
 {
@@ -29,7 +29,7 @@ class GameManager
     int start_hp;
     int start_att;
     int start_magic;
-    main_char* player;
+    MainChar* player;
 
     //game set-up
     int steps_to_end;
@@ -37,9 +37,9 @@ class GameManager
     int r; //event determiner, used in main loop 
     int event_bit; //1 if an event occurs; 0 if it does not
     std::string answer; //answer to 'yes/no' questions
-    
+  
     // Enemy data
-    enemy *foe;
+    Enemy *foe;
     int levelSelector; //determines level of enemy (0 if weak, 1 if strong)
     int nameFinder; //finds enemy name
     int statsFinder; //finds enemy stats from enemy array
