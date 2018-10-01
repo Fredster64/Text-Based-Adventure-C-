@@ -3,8 +3,8 @@
 #include <windows.h> //Sleep()
 #include <fstream> // ifstream
 
-#include "Objects/main_char.h"
-#include "Objects/enemy.h"
+#include "Objects/MainChar.h"
+#include "Objects/Enemy.h"
 #include "includes.h"
 
 // ----- Defining Non-member functions ----- //
@@ -32,7 +32,7 @@ int dead_check(T& thing)
 
 // special case for main character
 template <>
-int dead_check<>(main_char& player)
+int dead_check<>(MainChar& player)
 {
     if( player.hp <= 0 )
     {
@@ -47,7 +47,7 @@ int dead_check<>(main_char& player)
 }
 
 // probability of an enemy attempting to cast a spell
-int spellProb(enemy foe)
+int spellProb(Enemy foe)
 {
     //probability of casting a spell is 1/prob
     int prob=100; //probability of a non-magic foe attempting to cast
@@ -65,7 +65,7 @@ int spellProb(enemy foe)
 }
 
 // the battle sequence between an enemy and the main character
-void battle(main_char& player, enemy& foe)
+void battle(MainChar& player, Enemy& foe)
 {
     // Decides whether foe will attack or cast a spell
     int foeChoice = 0;

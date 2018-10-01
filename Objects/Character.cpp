@@ -1,7 +1,7 @@
-#include "character.h"
+#include "Character.h"
 using namespace std;
 
-character::character(int hit_points, int att_power, int magic_energy, string type)
+Character::Character(int hit_points, int att_power, int magic_energy, string type)
 {
     hp = hit_points;
     att_pow = att_power;
