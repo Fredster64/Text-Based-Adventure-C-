@@ -3,8 +3,8 @@
 #include "GameManager.h"
 #include "variables.h"
 #include "includes.h"
-#include "Objects/main_char.h"
-#include "Objects/enemy.h"
+#include "Objects/MainChar.h"
+#include "Objects/Enemy.h"
 
 #include <iostream> // Input and output text
 #include <fstream> //for reading text files
@@ -30,7 +30,7 @@ GameManager::GameManager()
     start_hp = 30;
     start_att = 5;
     start_magic = 5;
-    player = new main_char(start_hp, start_att, start_magic, "");
+    player = new MainChar(start_hp, start_att, start_magic, "");
 
     // Game variables
     steps_to_end = 30;
@@ -125,7 +125,7 @@ void GameManager::enemyEvent()
     {
         // Get enemy data and battle it
         foeName = strong_enemy_names[statsFinder];
-        foe = new enemy(strong_enemies[statsFinder][0], strong_enemies[statsFinder][1], strong_enemies[statsFinder][2], foeName);
+        foe = new Enemy(strong_enemies[statsFinder][0], strong_enemies[statsFinder][1], strong_enemies[statsFinder][2], foeName);
         battle(*player, *foe);
         delete foe;
     }
@@ -133,8 +133,8 @@ void GameManager::enemyEvent()
     if( nameFinder == 0 )
     {
         // Get enemy data and battle it
-        foeName=weak_enemy_names[statsFinder];
-        foe = new enemy(weak_enemies[statsFinder][0], weak_enemies[statsFinder][1] ,weak_enemies[statsFinder][2], foeName);
+        foeName = weak_enemy_names[statsFinder];
+        foe = new Enemy(weak_enemies[statsFinder][0], weak_enemies[statsFinder][1], weak_enemies[statsFinder][2], foeName);
         battle(*player, *foe);
         delete foe;
     }
