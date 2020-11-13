@@ -5,9 +5,21 @@
 #include "Objects/mainChar.h"
 #include "Objects/enemy.h"
 #include "includes.h"
-#include "util.h"
 
 // ----- Defining Non-member functions ----- //
+
+#ifdef _WIN32
+#include <Windows.h>
+#define SLEEP_FACTOR 1000
+#else
+#include <unistd.h>
+#define SLEEP_FACTOR 1
+#endif
+
+void tba_sleep(int d)
+{
+    sleep(d * SLEEP_FACTOR);
+}
 
 // return a random integer between 0 and a-1
 int random(int a)

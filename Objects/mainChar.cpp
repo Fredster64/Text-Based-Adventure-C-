@@ -1,8 +1,8 @@
 #include "mainChar.h"
+#include "../includes.h"
+
 #include <iostream>
 #include <cstdlib> //for rand()
-
-#include "../util.h"
 
 using namespace std;
 

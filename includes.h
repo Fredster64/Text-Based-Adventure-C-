@@ -19,3 +19,6 @@ int spellProb(Enemy foe);
 
 // Battle sequence between player and foe
 void battle(MainChar& player, Enemy& foe);
+
+// Custom sleep function
+void tba_sleep(int d);

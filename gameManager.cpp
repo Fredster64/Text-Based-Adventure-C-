@@ -5,7 +5,6 @@
 #include "includes.h"
 #include "Objects/mainChar.h"
 #include "Objects/enemy.h"
-#include "util.h"
 
 #include <iostream> // Input and output text
 #include <fstream> //for reading text files
