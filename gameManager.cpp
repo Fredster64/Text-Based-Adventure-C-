@@ -1,21 +1,21 @@
 // Contains definitions of member methods for GameManager
 
-#include "GameManager.h"
+#include "gameManager.h"
 #include "variables.h"
 #include "includes.h"
-#include "Objects/MainChar.h"
-#include "Objects/Enemy.h"
+#include "Objects/mainChar.h"
+#include "Objects/enemy.h"
+#include "util.h"
 
 #include <iostream> // Input and output text
 #include <fstream> //for reading text files
-#include <windows.h> // Sleep()
 #include <ctime> // Use time() to give a seed to random()
 
 using namespace std; 
 
 // Constructor will set up game 
 //  and enter game loop
-GameManager::GameManager() 
+gameManager::gameManager()
 {
     // Set random seed 
     srand( (unsigned) time(0) ); 
@@ -55,7 +55,7 @@ GameManager::GameManager()
     // ----- Set up and Play ----- //
 
     //Pre-game text
-    Sleep(1000);
+    tba_sleep(1000);
     cout << "Your quest is to reach the treasure, which is " << steps_to_end << " steps away." << endl;
     cout << "You start with " << start_hp << " hit points, as well as " << start_magic << " magic points." << endl;
     cout << "Your regular attack does " << start_att << " damage." << endl;
@@ -67,7 +67,7 @@ GameManager::GameManager()
 };
 
 // Player decides whether or not they want to start the game 
-bool GameManager::chooseToStart()
+bool gameManager::chooseToStart()
 {
     //reading introduction text
     string line;
@@ -77,7 +77,7 @@ bool GameManager::chooseToStart()
 
     intro.close();
 
-    Sleep(2000);
+    tba_sleep(2000);
     cout << "Will you?" << endl;
     
     // Get user input in play_bit
@@ -93,7 +93,7 @@ bool GameManager::chooseToStart()
     if( play_bit == "no" )
     {
         cout << "Never mind then.";
-        Sleep(500);
+        tba_sleep(500);
         return false; // end the game
     }
     
@@ -103,9 +103,9 @@ bool GameManager::chooseToStart()
 
 // ----- Event Methods ----- //
 
-void GameManager::enemyEvent()
+void gameManager::enemyEvent()
 {
-    Sleep(2000);
+    tba_sleep(2000);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
     statsFinder = random(5); //default setting (for random weak enemy)
 
@@ -118,7 +118,7 @@ void GameManager::enemyEvent()
     }
 
     //Construct enemy and battle it
-    Sleep(1000);
+    tba_sleep(1000);
 
     // Strong enemy case
     if( nameFinder == 1 )
@@ -141,18 +141,18 @@ void GameManager::enemyEvent()
     return;
 };
 
-void GameManager::trapEvent()
+void gameManager::trapEvent()
 {
-    Sleep(2000);
+    tba_sleep(2000);
     cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
     trapSelector = random(4); //chooses trap
-    Sleep(1000);
+    tba_sleep(1000);
     
     // Print trap intro text
     cout << "It's a trap!" << endl << traps[trapSelector] << endl;
     
     eventSelector = random( trap_stats[trapSelector][1] ); //see if you escape
-    Sleep(1000);
+    tba_sleep(1000);
 
     // Trap triggered
     if( eventSelector == 0 )
@@ -169,16 +169,16 @@ void GameManager::trapEvent()
     return;    
 };
 
-void GameManager::benchEvent()
+void gameManager::benchEvent()
 {
-    Sleep(2000);
+    tba_sleep(2000);
     
     // Print explanatory text
     cout << "You walk " << steps_before_event << " steps before..." << endl;
-    Sleep(1000);
+    tba_sleep(1000);
     cout << "You reach a comfortable-looking bench." << endl;
     cout << "However, you also see a potentially useful object on the floor ahead of you." << endl;
-    Sleep(500);
+    tba_sleep(500);
     cout << "Will you take a seat?" << endl;
     
     // Get player answer
@@ -208,11 +208,11 @@ void GameManager::benchEvent()
     return;
 };
 
-void GameManager::potionEvent()
+void gameManager::potionEvent()
 {
-    Sleep(2000);
+    tba_sleep(2000);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
-    Sleep(1000);
+    tba_sleep(1000);
     // Explanatory text
     cout << "You see a strange potion on a shelf to your right." << endl;
     cout << "Will you drink the potion?" << endl;
@@ -224,7 +224,7 @@ void GameManager::potionEvent()
         cout << "Answer 'yes' or 'no'." << endl;
         cin >> answer;
     }
-    Sleep(500);
+    tba_sleep(500);
     
     // Drink the potion
     if( answer == "yes" )
@@ -260,7 +260,7 @@ void GameManager::potionEvent()
 
 // The game loop itself 
 // Uses r to determine randomly what events occur at a given step
-void GameManager::gameLoop()
+void gameManager::gameLoop()
 {
     while( ( steps_to_end > 0 ) && ( dead_check(*player) == 0 ) )
     {
@@ -306,7 +306,7 @@ void GameManager::gameLoop()
         // Check if game will continue (after an event has occurred)
         if( ( event_bit == 1 ) && ( player->hp > 0 ) )
         {
-            Sleep(1000);
+            tba_sleep(1000);
             cout << "You must travel a further " << steps_to_end << " steps before you reach the treasure." << endl << endl;
             steps_to_end--;
             steps_before_event = 1;
@@ -316,14 +316,14 @@ void GameManager::gameLoop()
     // Test if player has won the game
     if( ( steps_to_end <= 0 ) && ( player->hp > 0 ) ) 
     {
-        Sleep(2000);
+        tba_sleep(2000);
         cout << "You walk " << steps_before_event << " steps before..." << endl;
-        Sleep(1000);
+        tba_sleep(1000);
         cout << "...you see a golden glow ahead of you." << endl;
         cout << "You find yourself in a room full of unimaginable treasures." << endl;
-        Sleep(1000);
+        tba_sleep(1000);
         cout << "Claiming the treasure as your own, you fill your bag and rush out of the castle." << endl;
-        Sleep(500);
+        tba_sleep(500);
         cout << "Congratulations, " << player->name << ", you have completed the quest and obtained the treasure!" << endl;
     }
     return;

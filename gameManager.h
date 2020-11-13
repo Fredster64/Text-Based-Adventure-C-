@@ -2,16 +2,16 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "Objects/MainChar.h"
-#include "Objects/Enemy.h"
+#include "Objects/mainChar.h"
+#include "Objects/enemy.h"
 
-class GameManager
+class gameManager
 {
     // ----- Methods ----- //
     
     // Constructor will execute setup and also the main game loop
     public:
-        GameManager();
+        gameManager();
     // Player decides whether or not to start the game
     bool chooseToStart();
     // Main game loop 
