@@ -18,12 +18,20 @@
 
 void tba_sleep(int i)
 {
+    #ifdef _WIN32
+    Sleep(i * SLEEP_FACTOR);
+    #else
     sleep(i * SLEEP_FACTOR);
+    #endif
 }
 
 void tba_sleep(double d)
 {
+    #ifdef _WIN32
+    Sleep((unsigned int)(d * SLEEP_FACTOR));
+    #else
     sleep((unsigned int)(d * SLEEP_FACTOR));
+    #endif
 }
 
 // return a random integer between 0 and a-1
