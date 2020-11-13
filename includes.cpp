@@ -2,8 +2,8 @@
 #include <cstdlib> // rand(), srand()
 #include <fstream> // ifstream
 
-#include "Objects/mainChar.h"
-#include "Objects/enemy.h"
+#include "objects/mainchar.h"
+#include "objects/enemy.h"
 #include "includes.h"
 
 // ----- Defining Non-member functions ----- //

@@ -1,10 +1,10 @@
 // Contains definitions of member methods for GameManager
 
-#include "gameManager.h"
+#include "gamemanager.h"
 #include "variables.h"
 #include "includes.h"
-#include "Objects/mainChar.h"
-#include "Objects/enemy.h"
+#include "objects/mainchar.h"
+#include "objects/enemy.h"
 
 #include <iostream> // Input and output text
 #include <fstream> //for reading text files
@@ -14,7 +14,7 @@ using namespace std;
 
 // Constructor will set up game 
 //  and enter game loop
-gameManager::gameManager()
+GameManager::GameManager()
 {
     // Set random seed 
     srand( (unsigned) time(0) ); 
@@ -66,7 +66,7 @@ gameManager::gameManager()
 };
 
 // Player decides whether or not they want to start the game 
-bool gameManager::chooseToStart()
+bool GameManager::chooseToStart()
 {
     //reading introduction text
     string line;
@@ -102,7 +102,7 @@ bool gameManager::chooseToStart()
 
 // ----- Event Methods ----- //
 
-void gameManager::enemyEvent()
+void GameManager::enemyEvent()
 {
     tba_sleep(2);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
@@ -140,7 +140,7 @@ void gameManager::enemyEvent()
     return;
 };
 
-void gameManager::trapEvent()
+void GameManager::trapEvent()
 {
     tba_sleep(2);
     cout << "You walk " << steps_before_event << " steps. Something doesn't feel right..." << endl;
@@ -168,7 +168,7 @@ void gameManager::trapEvent()
     return;    
 };
 
-void gameManager::benchEvent()
+void GameManager::benchEvent()
 {
     tba_sleep(2);
     
@@ -207,7 +207,7 @@ void gameManager::benchEvent()
     return;
 };
 
-void gameManager::potionEvent()
+void GameManager::potionEvent()
 {
     tba_sleep(2);
     cout << "You walk " << steps_before_event << " steps before..." << endl;
@@ -259,7 +259,7 @@ void gameManager::potionEvent()
 
 // The game loop itself 
 // Uses r to determine randomly what events occur at a given step
-void gameManager::gameLoop()
+void GameManager::gameLoop()
 {
     while( ( steps_to_end > 0 ) && ( dead_check(*player) == 0 ) )
     {

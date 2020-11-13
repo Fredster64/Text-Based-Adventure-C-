@@ -1,6 +1,6 @@
 #include <string>
-#include "Objects/mainChar.h"
-#include "Objects/enemy.h"
+#include "objects/mainchar.h"
+#include "objects/enemy.h"
 
 // Declaring non-member functions
 

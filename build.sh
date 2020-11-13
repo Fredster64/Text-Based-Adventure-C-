@@ -1,2 +1,2 @@
 #!/bin/bash
-g++ -o main main.cpp gameManager.cpp includes.cpp Objects/character.cpp Objects/enemy.cpp Objects/mainChar.cpp
+g++ -o main main.cpp gamemanager.cpp includes.cpp objects/character.cpp objects/enemy.cpp objects/mainchar.cpp

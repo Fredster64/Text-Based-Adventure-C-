@@ -1,4 +1,4 @@
-#include "mainChar.h"
+#include "mainchar.h"
 #include "../includes.h"
 
 #include <iostream>
