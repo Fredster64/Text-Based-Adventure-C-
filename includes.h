@@ -21,4 +21,5 @@ int spellProb(Enemy foe);
 void battle(MainChar& player, Enemy& foe);
 
 // Custom sleep function
-void tba_sleep(int d);
+void tba_sleep(int i);
+void tba_sleep(double d);

@@ -66,7 +66,7 @@ void MainChar::attack(Character& foe)
     int crit_bit = rand()%4; // determines whether critical hit happens
     int damage = att_pow;
     cout << "You attack the " << foe.name << "." << endl;
-    tba_sleep(300);
+    tba_sleep(0.3);
 
     // Adjust damage if hit is critical
     if( crit_bit == 0 )

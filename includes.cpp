@@ -16,9 +16,14 @@
 #define SLEEP_FACTOR 1
 #endif
 
-void tba_sleep(int d)
+void tba_sleep(int i)
 {
-    sleep(d * SLEEP_FACTOR);
+    sleep(i * SLEEP_FACTOR);
+}
+
+void tba_sleep(double d)
+{
+    sleep((unsigned int)(d * SLEEP_FACTOR));
 }
 
 // return a random integer between 0 and a-1
@@ -33,7 +38,7 @@ int dead_check(T& thing)
 {
     if(thing.hp<=0)
     {
-        tba_sleep(1000);
+        tba_sleep(1);
         std::cout << "The " << thing.name << " has been slaughtered." << std::endl << std::endl;
         return 1;
     }
@@ -48,9 +53,9 @@ int dead_check<>(MainChar& player)
 {
     if( player.hp <= 0 )
     {
-        tba_sleep(1000);
+        tba_sleep(1);
         std::cout << "You have died!" << std::endl;
-        tba_sleep(1000);
+        tba_sleep(1);
         return 1;
     }
     else
@@ -85,7 +90,7 @@ void battle(MainChar& player, Enemy& foe)
     while( ( foe.hp > 0 ) && ( player.hp > 0 ) )
     {
         //--- Enemy turn ---//
-        tba_sleep(1000);
+        tba_sleep(1);
         foeChoice = random( spellProb(foe) );
         if( (foeChoice == 0) )  //if the enemy will cast a spell
         {
@@ -100,15 +105,15 @@ void battle(MainChar& player, Enemy& foe)
 
         //--- Player turn ----//
 
-        tba_sleep(1000);
+        tba_sleep(1);
         if(player.hp>0)
         {
             // UI text
             std::cout << player.name << ": hit points " << player.hp << "/att. power " << player.att_pow << "/magic points " << player.magic << std::endl;
             std::cout << "The " << foe.name << " has " << foe.hp << " hit points remaining." << std::endl << std::endl;
-            tba_sleep(1500);
+            tba_sleep(1.5);
             std::cout << "What will you do?" << std::endl;
-            tba_sleep(500);
+            tba_sleep(0.5);
             std::cout << "Choose: 'attack', 'bolt' or 'aura'." << std::endl;
             std::cout << "Type 'help' if you need the rules of combat explained." << std::endl;
             std::string turn_choice = "";
