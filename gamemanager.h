@@ -2,8 +2,8 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "Objects/MainChar.h"
-#include "Objects/Enemy.h"
+#include "objects/mainchar.h"
+#include "objects/enemy.h"
 
 class GameManager
 {

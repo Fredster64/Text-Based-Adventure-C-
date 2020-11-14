@@ -1,13 +1,38 @@
 #include <iostream> // Reading 'help' file
 #include <cstdlib> // rand(), srand()
-#include <windows.h> //Sleep()
 #include <fstream> // ifstream
 
-#include "Objects/MainChar.h"
-#include "Objects/Enemy.h"
+#include "objects/mainchar.h"
+#include "objects/enemy.h"
 #include "includes.h"
 
 // ----- Defining Non-member functions ----- //
+
+#ifdef _WIN32
+#include <Windows.h>
+#define SLEEP_FACTOR 1000
+#else
+#include <unistd.h>
+#define SLEEP_FACTOR 1
+#endif
+
+void tba_sleep(int i)
+{
+    #ifdef _WIN32
+    Sleep(i * SLEEP_FACTOR);
+    #else
+    sleep(i * SLEEP_FACTOR);
+    #endif
+}
+
+void tba_sleep(double d)
+{
+    #ifdef _WIN32
+    Sleep((unsigned int)(d * SLEEP_FACTOR));
+    #else
+    sleep((unsigned int)(d * SLEEP_FACTOR));
+    #endif
+}
 
 // return a random integer between 0 and a-1
 int random(int a)
@@ -21,7 +46,7 @@ int dead_check(T& thing)
 {
     if(thing.hp<=0)
     {
-        Sleep(1000);
+        tba_sleep(1);
         std::cout << "The " << thing.name << " has been slaughtered." << std::endl << std::endl;
         return 1;
     }
@@ -36,9 +61,9 @@ int dead_check<>(MainChar& player)
 {
     if( player.hp <= 0 )
     {
-        Sleep(1000);
+        tba_sleep(1);
         std::cout << "You have died!" << std::endl;
-        Sleep(1000);
+        tba_sleep(1);
         return 1;
     }
     else
@@ -73,7 +98,7 @@ void battle(MainChar& player, Enemy& foe)
     while( ( foe.hp > 0 ) && ( player.hp > 0 ) )
     {
         //--- Enemy turn ---//
-        Sleep(1000);
+        tba_sleep(1);
         foeChoice = random( spellProb(foe) );
         if( (foeChoice == 0) )  //if the enemy will cast a spell
         {
@@ -88,15 +113,15 @@ void battle(MainChar& player, Enemy& foe)
 
         //--- Player turn ----//
 
-        Sleep(1000);
+        tba_sleep(1);
         if(player.hp>0)
         {
             // UI text
-            std::cout << player.name << ": hit points " << player.hp << "/att. power " << player.att_pow << "/magic points " << player.magic << endl;
+            std::cout << player.name << ": hit points " << player.hp << "/att. power " << player.att_pow << "/magic points " << player.magic << std::endl;
             std::cout << "The " << foe.name << " has " << foe.hp << " hit points remaining." << std::endl << std::endl;
-            Sleep(1500);
+            tba_sleep(1.5);
             std::cout << "What will you do?" << std::endl;
-            Sleep(500);
+            tba_sleep(0.5);
             std::cout << "Choose: 'attack', 'bolt' or 'aura'." << std::endl;
             std::cout << "Type 'help' if you need the rules of combat explained." << std::endl;
             std::string turn_choice = "";
